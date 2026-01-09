@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>clock definition</title>
+    <!-- Favicon link -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    
+    <style>
+        /* Configuração da fonte personalizada do servidor */
+        @font-face {
+            font-family: 'Anja Eliane';
+            src: url('Anja Eliane.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /* Estilos para centralizar e estilizar o relógio */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0f0f0f;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: sans-serif;
+            overflow: hidden;
+        }
+
+        #main-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 45px; 
+        }
+
+        #clock-container {
+            text-align: center;
+            user-select: none;
+            /* Fonte personalizada apenas para o relógio */
+            font-family: 'Anja Eliane', sans-serif;
+            animation: soft-blink 4s ease-in-out infinite;
+        }
+
+        .clock-text {
+            font-size: 8rem;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+        }
+
+        .hours-group {
+            display: flex;
+            align-items: baseline;
+            margin-right: 20px;
+        }
+
+        .ampm {
+            font-size: 2rem;
+            text-transform: lowercase;
+            font-weight: normal;
+            color: #888;
+            margin-left: 12px;
+        }
+
+        .separator {
+            margin: 0 10px;
+        }
+
+        /* Container da seleção de cores */
+        #selection-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px; 
+        }
+
+        .label-text {
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: normal;
+            font-size: 1rem;
+            color: #666;
+            letter-spacing: 1px;
+            text-transform: lowercase;
+        }
+
+        /* Estilo específico para deixar "color" em negrito */
+        .label-text b {
+            font-weight: bold;
+            color: #777;
+        }
+
+        #color-palette {
+            display: flex;
+            gap: 10px;
+        }
+
+        .color-box {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            border-radius: 4px; /* Levemente arredondado */
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .color-box:hover {
+            transform: scale(1.1);
+        }
+
+        .action-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .divider-bar {
+            width: 350px;
+            height: 35px;
+            border: 1px solid #333;
+            border-radius: 4px; /* Levemente arredondado */
+            background-color: transparent;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .link-icon {
+            width: 16px;
+            height: 16px;
+            fill: #666;
+            flex-shrink: 0;
+            margin-right: 10px;
+        }
+
+        /* Estilo do texto do link em Arial Normal */
+        .link-text-display {
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: normal;
+            font-size: 0.85rem;
+            color: #aaa;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            letter-spacing: 0;
+        }
+
+        .copy-button {
+            width: 35px;
+            height: 35px;
+            border: 1px solid #333;
+            border-radius: 4px; /* Levemente arredondado */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: transparent;
+        }
+
+        .copy-button:hover {
+            background-color: #1a1a1a;
+            border-color: #555;
+        }
+
+        .copy-icon {
+            width: 18px;
+            height: 18px;
+            fill: #666;
+        }
+
+        @keyframes soft-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.85; }
+        }
+
+        @media (max-width: 600px) {
+            .clock-text { font-size: 4rem; }
+            .ampm { font-size: 1.2rem; }
+            .color-box { width: 25px; height: 25px; }
+            .divider-bar { width: 200px; height: 30px; }
+            .copy-button { width: 30px; height: 30px; }
+            #main-wrapper { gap: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main-wrapper">
+        <div id="clock-container">
+            <div class="clock-text">
+                <div class="hours-group">
+                    <span id="hour-digits">00</span>
+                    <span id="ampm-label" class="ampm">am</span>
+                </div>
+                <span class="separator">:</span>
+                <span id="minute-digits">00</span>
+            </div>
+        </div>
+
+        <div id="selection-area">
+            <span class="label-text">choose the <b>color</b>:</span>
+            <div id="color-palette">
+                <div class="color-box" style="background-color: #e6e2e3;" data-link="https://exemplo.com/cor-1"></div>
+                <div class="color-box" style="background-color: #8d735c;" data-link="https://exemplo.com/cor-2"></div>
+                <div class="color-box" style="background-color: #dad7d0;" data-link="https://exemplo.com/cor-3"></div>
+                <div class="color-box" style="background-color: #fff9fb;" data-link="https://exemplo.com/cor-4"></div>
+            </div>
+            
+            <div class="action-row">
+                <div class="divider-bar">
+                    <svg class="link-icon" viewBox="0 0 24 24">
+                        <path d="M3.9,12C3.9,10.29 5.29,8.9 7,8.9H11V7H7A5,5 0 0,0 2,12A5,5 0 0,0 7,17H11V15.1H7C5.29,15.1 3.9,13.71 3.9,12M8,13H16V11H8V13M17,7H13V8.9H17C18.71,8.9 20.1,10.29 20.1,12C20.1,13.71 18.71,15.1 17,15.1H13V17H17A5,5 0 0,0 22,12A5,5 0 0,0 17,7Z" />
+                    </svg>
+                    <span id="display-link" class="link-text-display"></span>
+                </div>
+
+                <div class="copy-button" id="copy-btn" title="Copiar Link">
+                    <svg class="copy-icon" viewBox="0 0 24 24">
+                        <path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'pm' : 'am';
+
+            hours = hours % 12;
+            hours = hours ? hours : 12; 
+            const hoursStr = String(hours).padStart(2, '0');
+
+            document.getElementById('hour-digits').textContent = hoursStr;
+            document.getElementById('minute-digits').textContent = minutes;
+            document.getElementById('ampm-label').textContent = ampm;
+        }
+
+        const colorBoxes = document.querySelectorAll('.color-box');
+        const displayLink = document.getElementById('display-link');
+        const copyBtn = document.getElementById('copy-btn');
+
+        colorBoxes.forEach(box => {
+            box.addEventListener('click', () => {
+                const link = box.getAttribute('data-link');
+                displayLink.textContent = link;
+            });
+        });
+
+        copyBtn.addEventListener('click', () => {
+            const linkToCopy = displayLink.textContent;
+            if (linkToCopy) {
+                const tempInput = document.createElement('textarea');
+                tempInput.value = linkToCopy;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+                
+                copyBtn.style.borderColor = '#888';
+                setTimeout(() => copyBtn.style.borderColor = '#333', 200);
+            }
+        });
+
+        setInterval(updateClock, 1000);
+        updateClock(); 
+    </script>
+</body>
+</html>
